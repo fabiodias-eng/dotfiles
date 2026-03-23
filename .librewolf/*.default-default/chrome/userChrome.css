@@ -1,0 +1,26 @@
+/* === TRUE DARK BASE === */
+:root {
+
+  --toolbar-field-background-color: #111 !important;
+  --sidebar-background-color: #111 !important;
+}
+
+/* === FORCE DARK TOOLBARS SAFELY === */
+#navigator-toolbox,
+#TabsToolbar,
+#nav-bar,
+#PersonalToolbar {
+  background-color: #111 !important;
+  background-image: none !important;
+}
+
+/* === REAL URL BAR BACKGROUND === */
+#urlbar-background {
+  background-color: #111 !important;
+}
+
+/* === SIDEBAR === */
+#sidebar-box {
+  background-color: #111 !important;
+}
+

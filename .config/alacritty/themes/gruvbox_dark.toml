@@ -1,0 +1,37 @@
+[colors.primary]
+background = '#1d2021'	# Dark background (same as i3's $bg)
+foreground = '#ebdbb2'  # Light foreground (same as i3's $fg)
+
+[colors.normal]
+black   = '#cc241d'   # Very dark gray (subtle, not fully black)
+red     = '#98971a'   # Darkened red, still recognizable but soft
+green   = '#d79921'   # Muted green, just a touch of color
+yellow  = '#458588'   # Warm yellow, toned down but still visible
+blue    = '#5a7f92'   # Darkened blue, cool and muted
+magenta = '#b16286'   # Soft magenta, not too bright
+cyan    = '#689d6a'   # Muted cyan, smooth and understated
+white   = '#ebdbb2'   # Light gray, for a subtle contrast with the background
+
+[colors.bright]
+black   = '#fb4934'   # Slightly lighter dark gray
+red     = '#b8bb26'   # Same muted red
+green   = '#fabd2f'   # Same muted green
+yellow  = '#83a598'   # Same warm yellow
+blue    = '#5a7f92'   # Same darkened blue
+magenta = '#d3869b'   # Same soft magenta
+cyan    = '#8ec07c'   # Same muted cyan
+white   = '#cab699'   # Pure white, for brightness when needed
+
+
+[window]
+opacity = 0.90
+
+[font]
+normal = { family = "FiraCode Nerd Font Mono", style = "Regular" }
+bold = { family = "FiraCode Nerd Font Mono", style = "Bold" }
+italic = { family = "FiraCode Nerd Font Mono", style = "Italic" }
+bold_italic = { family = "FiraCode Nerd Font Mono", style = "Bold Italic" }
+size = 12.8
+
+[scrolling]
+history=100000

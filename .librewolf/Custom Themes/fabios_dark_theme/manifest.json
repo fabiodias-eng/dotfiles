@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "Fabio Full Dark Black Theme",
+  "version": "1.0",
+  "description": "Pure black UI with white text and dark sidebar",
+  "applications": {
+    "gecko": {
+      "id": "fabio-dark-black@local"
+    }
+  },
+  "theme": {
+    "colors": {
+      "frame": "#000000",
+      "frame_inactive": "#000000",
+
+      "toolbar": "#000000",
+      "toolbar_text": "#ffffff",
+
+      "toolbar_field": "#000000",
+      "toolbar_field_text": "#ffffff",
+
+      "tab_background_text": "#ffffff",
+
+      "popup": "#000000",
+      "popup_text": "#ffffff",
+
+      "sidebar": "#000000",
+      "sidebar_text": "#ffffff"
+    }
+  }
+}
