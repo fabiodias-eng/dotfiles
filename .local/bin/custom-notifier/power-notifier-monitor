@@ -1,0 +1,45 @@
+#!/bin/bash
+
+notify() {
+    local summary="$1"
+    local body="$2"
+    local icon="/usr/share/icons/Papirus-Dark/16x16/devices/battery.svg"
+
+    notify-send -r 101 -a "Battery Status" -i "$icon" "$summary" "$body"
+}
+
+source "$HOME/.local/bin/custom-notifier/utils/find-battery"
+BATTERY_PATH="$(find_battery)"
+BATTERY_NAME="${BATTERY##*/}"
+
+LAST_TIME=0
+
+update_status() {
+    local current_time=$(date +%s)
+    local diff=$(( current_time - LAST_TIME ))
+
+    if [ "$diff" -lt 2 ]; then
+        return
+    fi
+    LAST_TIME=$current_time
+
+    sleep 0.8
+
+    local status=$(cat "$BATTERY_PATH/status" 2>/dev/null)
+    local capacity=$(cat "$BATTERY_PATH/capacity")
+    local now=$(cat "$BATTERY_PATH/energy_now" 2>/dev/null || cat "$BATTERY_PATH/charge_now")
+    local full=$(cat "$BATTERY_PATH/energy_full" 2>/dev/null || cat "$BATTERY_PATH/charge_full")
+    local rate=$(cat "$BATTERY_PATH/power_now" 2>/dev/null || cat "$BATTERY_PATH/current_now")
+
+    if [[ "$status" == "Full" || "$status" == "Charging" ]]; then
+        remaining=$(echo "scale=1; ($full - $now) / $rate" | bc)
+        notify "Charging" "${capacity}%, ${remaining}h"
+    elif [ "$status" == "Discharging" ]; then
+        remaining=$(echo "scale=1; $now / $rate" | bc)
+        notify "Discharging" "${capacity}%, ${remaining}h"  
+    fi
+}
+
+udevadm monitor --udev --subsystem-match=power_supply | stdbuf -oL grep "change" | stdbuf -oL grep -F "$BAT_NAME" | while read -r line; do
+    update_status
+done

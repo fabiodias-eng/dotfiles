@@ -1,0 +1,6 @@
+#!/bin/bash
+volume_level=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2 * 100)}')
+if [ "$volume_level" -gt 1 ]; then
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+    bash $HOME/.local/bin/custom-notifier/volume-notifier
+fi

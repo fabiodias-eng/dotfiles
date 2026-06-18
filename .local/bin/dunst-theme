@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Create Variables
+eval "$(xrdb -query | awk '
+/dunst.background:/ {print "BACKGROUND=" $2}
+/dunst.foreground:/ {print "FOREGROUND=" $2}
+/dunst.accent1:/    {print "ACCENT1=" $2}
+/dunst.accent2:/    {print "ACCENT2=" $2}
+/dunst.accent3:/    {print "ACCENT3=" $2}
+/dunst.warning:/    {print "WARNING=" $2}
+/dunst.error:/      {print "ERROR=" $2}
+/dunst.separator:/  {print "SEPARATOR=" $2}
+')"
+
+# Sanity check
+for v in BACKGROUND FOREGROUND ACCENT1 ACCENT2 ACCENT3 WARNING ERROR SEPARATOR; do
+    eval "test -n \"\$$v\"" || {
+        echo "Missing dunst variable: $v"
+        exit 1
+    }
+done
+
+# Substitute template variables with .Xresources (xrdb)
+sed \
+  -e "s|@BACKGROUND@|$BACKGROUND|g" \
+  -e "s|@FOREGROUND@|$FOREGROUND|g" \
+  -e "s|@ACCENT1@|$ACCENT1|g" \
+  -e "s|@ACCENT2@|$ACCENT2|g" \
+  -e "s|@ACCENT3@|$ACCENT3|g" \
+  -e "s|@WARNING@|$WARNING|g" \
+  -e "s|@ERROR@|$ERROR|g" \
+  -e "s|@SEPARATOR@|$SEPARATOR|g" \
+  ~/.config/dunst/dunstrc.template \
+  > ~/.config/dunst/dunstrc
+
+dunstctl reload

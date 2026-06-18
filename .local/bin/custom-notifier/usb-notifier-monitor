@@ -1,0 +1,117 @@
+#!/bin/sh
+
+# File name to store devices
+devices_file="/tmp/usb_devices_map"
+
+threshold=2  # seconds
+
+action=""
+is_device=0
+devpath=""
+serial=""
+vendor=""
+model=""
+model_db=""
+ICON="/usr/share/icons/Papirus-Dark/16x16/devices/drive-removable-media-usb.svg"
+
+get_name() {
+  if [ -n "$model_db" ]; then
+    name="$model_db"
+  elif [ -n "$vendor" ] && [ -n "$model" ]; then
+    name="$vendor $model"
+  elif [ -n "$model" ]; then
+    name="$model"
+  else
+    name="$serial"
+  fi
+
+  echo "$name" | tr '_' ' '
+}
+
+get_time() {
+  date +%s
+}
+
+udevadm monitor --udev --subsystem-match=usb --property |
+while read -r line; do
+  case "$line" in
+    ACTION=*)
+      action="${line#ACTION=}"
+      ;;
+    DEVTYPE=usb_device)
+      is_device=1
+      ;;
+    DEVPATH=*)
+      devpath="${line#DEVPATH=}"
+      ;;
+    ID_SERIAL=*)
+      serial="${line#ID_SERIAL=}"
+      ;;
+    ID_VENDOR=*)
+      vendor="${line#ID_VENDOR=}"
+      ;;
+    ID_MODEL=*)
+      model="${line#ID_MODEL=}"
+      ;;
+    ID_MODEL_FROM_DATABASE=*)
+      model_db="${line#ID_MODEL_FROM_DATABASE=}"
+      ;;
+    "")
+      if [ "$is_device" = "1" ]; then
+        now=$(get_time)
+
+        case "$action" in
+          add)
+            name=$(get_name)
+
+            # Store plugged UBS devices temporarily
+            if [ ! -f "$devices_file" ]; then 
+              : > "$devices_file"
+            fi
+
+            # Avoids duplicated devices
+            last=$(grep "^$devpath|" "$devices_file" 2>/dev/null)
+
+            if [ -z "$last" ]; then
+              notify-send -a "USB Device Monitor" -i "$ICON" "Connected" "$name"
+              echo "$devpath|$name|$now" >> "$devices_file"
+            fi
+            ;;
+          remove)
+            match=$(grep "^$devpath|" "$devices_file" 2>/dev/null)
+
+            if [ -n "$match" ]; then
+              name=$(echo "$match" | cut -d'|' -f2)
+              last_time=$(echo "$match" | cut -d'|' -f3)
+
+              # Rebounce by device
+              if [ $((now - last_time)) -gt $threshold ]; then
+                notify-send -a "USB Device Monitor" -i "$ICON" "Disconnected" "$name"
+              fi
+
+              # Removes device entry
+              escaped_devpath=$(printf '%s\n' "$devpath" | sed 's/[.[\*^$(){}?+|/]/\\&/g')
+              sed -i "\|^$escaped_devpath|d" "$devices_file"
+            else
+              notify-send -a "USB Device Monitor" "Disconnected" -i "$ICON"
+            fi
+            ;;
+        esac
+
+        if [ -f "$devices_file" ] && [ ! -s "$devices_file" ]; then
+          rm "$devices_file"
+        fi
+
+      fi
+
+      # Reset State
+      action=""
+      is_device=0
+      devpath=""
+      serial=""
+      vendor=""
+      model=""
+      model_db=""
+      ;;
+  esac
+done

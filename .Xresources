@@ -1,0 +1,108 @@
+! =========================================
+! GRUVBOX DARK
+! =========================================
+
+! =========================================
+! GLOBAL
+! =========================================
+
+*.background:         #282828
+*.foreground:         #ebdbb2
+*.cursorColor:        #ebdbb2
+
+! =========================================
+! ANSI COLORS
+! =========================================
+
+*.color0:             #282828
+*.color1:             #cc241d
+*.color2:             #98971a
+*.color3:             #d79921
+*.color4:             #458588
+*.color5:             #b16286
+*.color6:             #689d6a
+*.color7:             #a89984
+
+*.color8:             #928374
+*.color9:             #fb4934
+*.color10:            #b8bb26
+*.color11:            #fabd2f
+*.color12:            #83a598
+*.color13:            #d3869b
+*.color14:            #8ec07c
+*.color15:            #fbf1c7
+
+! =========================================
+! DWM
+! =========================================
+
+dwm.normbgcolor:      #282828
+dwm.normfgcolor:      #a89984
+dwm.normbordercolor:  #282828
+
+dwm.selbgcolor:       #689d6a
+dwm.selfgcolor:       #fbf1c7
+dwm.selbordercolor:   #8ec07c
+
+dwm.titlebgcolor:     #32302f
+dwm.titlefgcolor:     #ebdbb2
+dwm.titlebordercolor: #504945
+
+! =========================================
+! DMENU
+! =========================================
+
+dmenu.normbgcolor:    #282828
+dmenu.normfontcolor:  #ebdbb2
+
+dmenu.selbgcolor:     #689d6a
+dmenu.selfontcolor:   #fbf1c7
+
+! =========================================
+! DUNST
+! =========================================
+
+dunst.background:     #32302f
+dunst.foreground:     #ebdbb2
+
+dunst.accent1:        #458588
+dunst.accent2:        #8ec07c
+dunst.accent3:        #b8bb26
+
+dunst.warning:        #fabd2f
+dunst.error:          #fb4934
+
+dunst.separator:      #3c3836
+
+
+! =========================================
+! DWM BLOCKS
+! =========================================
+
+! CPU (Intel)
+dwmblocks.fg.cpu:     #458588
+dwmblocks.bg.cpu:     #282828
+
+! GPU (NVIDIA)
+dwmblocks.fg.gpu:     #b8bb26
+dwmblocks.bg.gpu:     #282828
+
+! Memory
+dwmblocks.fg.mem:     #fb4934
+dwmblocks.bg.mem:     #282828
+
+! Disk
+dwmblocks.fg.disk:    #fabd2f
+dwmblocks.bg.disk:    #282828
+
+! Weather
+dwmblocks.fg.wtr:     #b16286
+dwmblocks.bg.wtr:     #282828
+
+! Battery
+dwmblocks.fg.bat:     #8ec07c
+dwmblocks.bg.bat:     #282828
+
+! Clock
+dwmblocks.fg.clock:   #a89984
+dwmblocks.bg.clock:   #282828

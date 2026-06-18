@@ -1,0 +1,28 @@
+#!/bin/bash
+raw=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+
+muted=0
+echo "$raw" | grep -q MUTED && muted=1
+
+volume=$(echo "$raw" | grep -oE '[0-9]+(\.[0-9]+)?' | head -1)
+volume_level=$(awk -v v="$volume" 'BEGIN { printf "%d", v * 100 }')
+
+icon=""
+if [ "$muted" -eq 1 ]; then
+    icon="audio-volume-muted"
+elif [ "$volume_level" -lt 33 ]; then
+    icon="audio-volume-low"
+elif [ "$volume_level" -lt 66 ]; then
+    icon="audio-volume-medium"
+else
+    icon="audio-volume-high"
+fi
+
+notify-send \
+    -a "Volume Icon" \
+    -i "$icon" \
+    "Volume" \
+    "${volume_level}%" \
+    -h string:x-dunst-stack-tag:volume \
+    -h int:value:"${volume_level}" \
+    -t 1000

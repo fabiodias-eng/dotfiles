@@ -1,0 +1,14 @@
+#!/bin/bash
+
+find_battery() {
+    bat_path=""
+    for bat in /sys/class/power_supply/BAT*; do
+        [ "$(cat "$bat/present" 2>/dev/null)" == "1" ] && bat_path=$bat && break
+    done
+
+    if [ -z "$bat_path" ]; then
+        exit 1
+    fi
+
+    echo "$bat_path"
+}

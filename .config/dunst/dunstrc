@@ -1,0 +1,122 @@
+[global]
+
+# --- Appearance ---
+show_indicators = no
+frame_width = 3
+shadow = false
+corner_radius = 20
+corners = top-left,bottom-right
+progress_bar_corner_radius = 5
+progress_bar_corners = top-left,bottom-right
+
+# --- Base Colors ---
+
+background = "#32302f"
+foreground = "#ebdbb2"
+
+# --- Display ---
+origin = top-right
+offset = (15, 30)
+width = (250,500)
+height = (50, 150)
+notification_limit = 3
+gap_size = 5
+
+# --- Icon ---
+icon_path = /usr/share/icons/Papirus-Dark/16x16/devices:/usr/share/icons/Papirus-Dark/16x16/status:/usr/share/icons/Papirus-Dark/16x16/apps
+enable_recursive_icon_lookup = true
+icon_position = left
+max_icon_size = 64
+
+# --- Message ---
+font = DejaVu Sans Mono 16
+format = "%s"
+
+# --- Time ---
+timeout = 3
+idle_threshold = 120
+
+# --- Custom Configuration ---
+
+# -- Network --
+[nm-connect]
+    appname = "NetworkManager Applet"
+    summary = "Connection*"
+    new_icon = "/usr/share/icons/Papirus-Dark/16x16/actions/connected.svg"
+    format = "<b><span foreground='#b8bb26'> Online</span></b>"
+    timeout = 2
+
+[nm-disconnect]
+    appname = "NetworkManager Applet"
+    summary = "Disconnected*"
+    new_icon = "/usr/share/icons/Papirus-Dark/16x16/actions/disconnected.svg"
+    format = "<b><span foreground='#fb4934'> Offline</span></b>"
+    timeout = 2
+
+# -- Audio --
+[vol-low]
+    appname = "Volume Icon"
+    icon = "audio-volume-low"
+    new_icon = "/usr/share/icons/Papirus-Dark/22x22/actions/audio-volume-low.svg"
+    format = "<b>Volume</b> %p"
+    highlight = "#458588"
+    timeout = 1
+
+[vol-med]
+    appname = "Volume Icon"
+    icon = "audio-volume-medium"
+    new_icon = "/usr/share/icons/Papirus-Dark/22x22/actions/audio-volume-medium.svg"
+    format = "<b>Volume</b> %p"
+    highlight = "#8ec07c"
+    timeout = 1
+
+[vol-high]
+    appname = "Volume Icon"
+    icon = "audio-volume-high"
+    new_icon = "/usr/share/icons/Papirus-Dark/22x22/actions/audio-volume-high.svg"
+    format = "<b>Volume</b> %p"
+    highlight = "#b8bb26"
+    timeout = 1
+
+[vol-muted]
+    appname = "Volume Icon"
+    icon = "audio-volume-muted"
+    new_icon = "/usr/share/icons/Papirus-Dark/22x22/actions/audio-volume-muted.svg"
+    format = "<b>Volume</b> <span foreground='#fb4934'>Muted</span>"
+    highlight = "#fb4934"
+    timeout = 1
+
+# -- Brightness --
+[brightness]
+    appname = "Backlight"
+    summary = "Brightness"
+    new_icon = "/usr/share/icons/Papirus-Dark/24x24/actions/xfpm-brightness-lcd.svg"
+    format = "<b>Brightness</b> %p"
+    highlight = "#8ec07c"
+    timeout = 1
+
+# -- Power - Battery --
+[charging-battery]
+    appname = "Battery Status"
+    summary = "Charging"
+    format = "<b><span foreground='#8ec07c'>%s</span></b>\n%b"
+    timeout = 2
+
+[discharging-battery]
+    appname = "Battery Status"
+    summary = "Discharging"
+    format = "<b><span foreground='#fb4934'>%s</span></b>\n%b"
+    timeout = 2
+
+# -- USB Devices --
+[usb-plugged]
+    appname = "USB Device Monitor"
+    summary = "Connected"
+    format = "<b><span foreground='#8ec07c'>%s</span></b>\n%b"
+    timeout = 2
+
+[usb-removed]
+    appname = "USB Device Monitor"
+    summary = "Disconnected"
+    format = "<b><span foreground='#fb4934'>%s</span></b>\n%b"
+    timeout = 2

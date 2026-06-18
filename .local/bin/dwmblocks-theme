@@ -1,0 +1,66 @@
+#!/bin/bash
+
+eval "$(xrdb -query | awk '
+/dwmblocks\./ {
+    gsub(":", "", $1)
+
+    split($1,a,".")
+    key = toupper(a[2]) "_" toupper(a[3])
+
+    print key "=" $2
+}')"
+
+for v in \
+    FG_CPU BG_CPU \
+    FG_GPU BG_GPU \
+    FG_MEM BG_MEM \
+    FG_DISK BG_DISK \
+    FG_BAT BG_BAT \
+    FG_CLOCK BG_CLOCK \
+    FG_WTR BG_WTR
+do
+    eval "test -n \"\$$v\"" || {
+        echo "Missing dwmblocks variable: $v"
+        exit 1
+    }
+done
+
+render_template() {
+    in="$1"
+    out="$2"
+
+    sed \
+        -e "s|@FG_CPU@|$FG_CPU|g" \
+        -e "s|@BG_CPU@|$BG_CPU|g" \
+        -e "s|@FG_GPU@|$FG_GPU|g" \
+        -e "s|@BG_GPU@|$BG_GPU|g" \
+        -e "s|@FG_MEM@|$FG_MEM|g" \
+        -e "s|@BG_MEM@|$BG_MEM|g" \
+        -e "s|@FG_DISK@|$FG_DISK|g" \
+        -e "s|@BG_DISK@|$BG_DISK|g" \
+        -e "s|@FG_BAT@|$FG_BAT|g" \
+        -e "s|@BG_BAT@|$BG_BAT|g" \
+        -e "s|@FG_CLOCK@|$FG_CLOCK|g" \
+        -e "s|@BG_CLOCK@|$BG_CLOCK|g" \
+        -e "s|@FG_WTR@|$FG_WTR|g" \
+        -e "s|@BG_WTR@|$BG_WTR|g" \
+        "$in" > "$out"
+}
+
+statusbar_path="$HOME/.dwmblocks/statusbar"
+
+render_template "$statusbar_path/sb-cpu.template"   "$statusbar_path/sb-cpu"
+render_template "$statusbar_path/sb-gpu.template"   "$statusbar_path/sb-gpu"
+render_template "$statusbar_path/sb-mem.template"   "$statusbar_path/sb-mem"
+render_template "$statusbar_path/sb-disk.template"  "$statusbar_path/sb-disk"
+render_template "$statusbar_path/sb-bat.template"   "$statusbar_path/sb-bat"
+render_template "$statusbar_path/sb-clock.template" "$statusbar_path/sb-clock"
+render_template "$statusbar_path/sb-wtr.template" "$statusbar_path/sb-wtr"
+
+chmod +x "$statusbar_path/sb-cpu"
+chmod +x "$statusbar_path/sb-gpu"
+chmod +x "$statusbar_path/sb-mem"
+chmod +x "$statusbar_path/sb-disk"
+chmod +x "$statusbar_path/sb-bat"
+chmod +x "$statusbar_path/sb-wtr"
+chmod +x "$statusbar_path/sb-clock"
