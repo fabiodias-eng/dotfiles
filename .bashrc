@@ -69,3 +69,8 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Open ST with TMUX
+if [ -n "$DISPLAY" ] && [ -z "$TMUX" ]; then
+  tmux attach || tmux new
+fi
