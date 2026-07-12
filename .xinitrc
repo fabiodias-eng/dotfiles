@@ -10,14 +10,6 @@ fi
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
 
 # ======================================================
-# Environment Variables
-# ======================================================
-export XDG_CURRENT_DESKTOP=GNOME
-export XDG_DATA_DIRS=/usr/share:/usr/local/share
-export GTK_THEME=Arc-Dark
-export PATH="$HOME/.dwmblocks/statusbar:$PATH"
-
-# ======================================================
 # Start gpg-agent
 # ======================================================
 if ! pgrep -x gpg-agent > /dev/null; then
