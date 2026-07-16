@@ -59,7 +59,7 @@ fi
 nm-applet &
 
 # Start Audio Applet
-volumeicon &
+pasystray &
 
 # ======================================================
 # Launch Compositor
