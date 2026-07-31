@@ -9,16 +9,15 @@ opt.wrap = false
 opt.scrolloff = 8
 opt.sidescrolloff = 8
 opt.termguicolors = true
--- opt.colorcolumn = "100"
 opt.laststatus = 3
 opt.showmode = false
 
--- Tabs / Indentation
+-- Tabs
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.expandtab = true
-opt.smartindent = true
+opt.smartindent = false
 
 -- Search
 opt.ignorecase = true
@@ -35,16 +34,15 @@ opt.undodir = vim.fn.stdpath("state") .. "/undo"
 -- Splits
 opt.splitbelow = true
 opt.splitright = true
+opt.splitkeep = "screen"
 
--- Mouse
+-- Mouse / clipboard
 opt.mouse = "a"
-
--- Clipboard
 opt.clipboard = "unnamedplus"
 
 -- Performance
 opt.updatetime = 250
---opt.timeoutlen = 300
+opt.timeoutlen = 700
 
 -- Completion
 opt.completeopt = { "menu", "menuone", "noselect" }
@@ -53,9 +51,11 @@ opt.pumheight = 15
 -- Whitespace
 opt.list = true
 opt.listchars = {
-    tab = "» ",
-    trail = "·",
-    nbsp = "␣",
+	tab = " ",
+	trail = "·",
+	nbsp = "␣",
+	extends = "›",
+	precedes = "‹",
 }
 
 -- Misc

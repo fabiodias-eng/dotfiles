@@ -4,23 +4,23 @@ local map = vim.keymap.set
 -- Terminal
 -------------------------------------------------
 map("n", "<leader>tt", function()
-    vim.cmd("terminal")
-    vim.cmd("startinsert")
+	vim.cmd("terminal")
+	vim.cmd("startinsert")
 end, { desc = "Terminal" })
 
 map("n", "<leader>th", function()
-    vim.cmd("split | terminal")
-    vim.cmd("startinsert")
+	vim.cmd("split | terminal")
+	vim.cmd("startinsert")
 end, { desc = "Horizontal Terminal" })
 
 map("n", "<leader>tv", function()
-    vim.cmd("vsplit | terminal")
-    vim.cmd("startinsert")
+	vim.cmd("vsplit | terminal")
+	vim.cmd("startinsert")
 end, { desc = "Vertical Terminal" })
 
 map("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 map("t", "<leader>tc", "<C-\\><C-n><cmd>bd!<CR>", {
-    desc = "Close terminal"
+	desc = "Close terminal",
 })
 
 -------------------------------------------------
