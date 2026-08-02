@@ -1,5 +1,13 @@
 #!/bin/sh
 
+start_and_wait() {
+    "$@" &
+
+    while ! pgrep -x "$(basename "$1")" >/dev/null; do
+        sleep 0.05
+    done
+}
+
 # ======================================================
 # Start DBus Session and Communication ###
 # ======================================================
@@ -12,7 +20,7 @@ dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XA
 # ======================================================
 # Start gpg-agent
 # ======================================================
-if ! pgrep -x gpg-agent > /dev/null; then
+if ! pgrep -x gpg-agent >/dev/null; then
     eval $(gpg-agent --daemon)
 fi
 
@@ -50,23 +58,15 @@ fi
 TP=$(xinput list --name-only | grep -i 'touchpad')
 [ -n "$TP" ] && xinput set-prop "$TP" "libinput Tapping Enabled" 1 &
 
-# Start Bluetooth Applet
-if rfkill list bluetooth | grep -q "bluetooth"; then
-    blueman-applet &
-fi
-
-# Start Network Manager Applet
-nm-applet &
-
+# Start Clipboard Manager
+start_and_wait parcellite
 # Start Audio Applet
-pasystray &
+start_and_wait pasystray
+# Start Network Manager Applet
+start_and_wait nm-applet
 
 # Theme set
 gsettings set org.gnome.desktop.interface gtk-theme "Arc-Dark"
-
-# Enable Laptop Touch Click
-xinput set-prop 11 "libinput Tapping Enabled" 1
-
 
 # ======================================================
 # Launch Compositor
@@ -74,7 +74,7 @@ xinput set-prop 11 "libinput Tapping Enabled" 1
 xcompmgr -c -C -t0 -l0 -r0 -o0.15 &
 
 # ======================================================
-# Interface and Notification 
+# Interface and Notification
 # ======================================================
 dunst &
 
