@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Create Variables
+eval "$(xrdb -query | awk '
+/tmux.bg.bar:/ {print "BG_BAR=" $2}
+/tmux.fg.bar:/ {print "FG_BAR=" $2}
+/tmux.left.select.bg:/    {print "LEFT_SELECT_BG=" $2}
+/tmux.left.select.fg:/    {print "LEFT_SELECT_FG=" $2}
+/tmux.right.session.bg:/    {print "RIGHT_SESSION_BG=" $2}
+/tmux.right.session.fg:/    {print "RIGHT_SESSION_FG=" $2}
+/tmux.right.git.bg:/      {print "RIGHT_GIT_BG=" $2}
+/tmux.right.git.fg:/  {print "RIGHT_GIT_FG=" $2}
+')"
+# Sanity check
+for v in BG_BAR FG_BAR LEFT_SELECT_BG LEFT_SELECT_FG RIGHT_SESSION_BG RIGHT_SESSION_FG RIGHT_GIT_BG RIGHT_GIT_FG; do
+    eval "test -n \"\$$v\"" || {
+        echo "Missing tmux variable: $v"
+        exit 1
+    }
+done
+
+# Substitute template variables with .Xresources (xrdb)
+sed \
+    -e "s|@BG_BAR@|$BG_BAR|g" \
+    -e "s|@FG_BAR@|$FG_BAR|g" \
+    -e "s|@LEFT_SELECT_BG@|$LEFT_SELECT_BG|g" \
+    -e "s|@LEFT_SELECT_FG@|$LEFT_SELECT_FG|g" \
+    -e "s|@RIGHT_SESSION_BG@|$RIGHT_SESSION_BG|g" \
+    -e "s|@RIGHT_SESSION_FG@|$RIGHT_SESSION_FG|g" \
+    -e "s|@RIGHT_GIT_BG@|$RIGHT_GIT_BG|g" \
+    -e "s|@RIGHT_GIT_FG@|$RIGHT_GIT_FG|g" \
+    ~/.config/tmux/conf.d/tmux-statusbar.conf.template \
+    >~/.config/tmux/conf.d/tmux-statusbar.conf
+
+tmux kill-server

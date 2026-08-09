@@ -1,6 +1,8 @@
+require("config.options")
 require("config.lazy")
 require("config.keymaps")
-require("config.options")
+require("config.filetypes")
+require("config.autocmds")
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"

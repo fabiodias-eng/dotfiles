@@ -1,0 +1,11 @@
+#!/bin/bash
+
+fg="$1"
+text="$2"
+bg="$3"
+
+sync=$(tmux display-message -p "#{pane_synchronized}")
+
+if [ "$sync" = "1" ]; then
+    printf '#[fg=%s,bg=%s]#[fg=%s,bg=%s]#[default]#[fg=%s,bg=%s]' "$fg" "$bg" "$text" "$fg" "$fg" "$bg"
+fi

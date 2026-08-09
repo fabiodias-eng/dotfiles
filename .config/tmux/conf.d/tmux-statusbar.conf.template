@@ -1,0 +1,15 @@
+# =========================
+# TMUX STATUS BAR
+# =========================
+
+set -g status-interval 1
+set -g status-style bg="@BG_BAR@",fg="@FG_BAR@"
+
+set -g pane-border-lines single
+set -g status-left ""
+
+set -g window-status-format " #I#W "
+set -g window-status-current-format " #I#W #{?window_zoomed_flag,#[fg=color14] ,}"
+setw -g window-status-current-style fg="@LEFT_SELECT_FG@",bg="@LEFT_SELECT_BG@",bold
+
+set -g status-right "#{?#{==:#{pane_current_command},nvim},, #(~/.local/bin/tmux-status/tmux-git #{pane_current_path} '@RIGHT_GIT_FG@' '@RIGHT_GIT_BG@')}#[fg="@RIGHT_SESSION_FG@",bg="@RIGHT_SESSION_BG@",bold] Session#S"
