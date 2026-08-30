@@ -1,0 +1,15 @@
+#!/bin/sh
+
+class=$(xprop -id "$(xdotool getactivewindow)" WM_CLASS 2>/dev/null)
+
+case "$class" in
+*'"librewolf"'*)
+    ;;
+*)
+    exit 0
+    ;;
+esac
+
+sleep 0.3
+xdotool key --clearmodifiers ctrl+l
+xdotool type --clearmodifiers 'rd '
