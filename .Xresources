@@ -86,7 +86,10 @@ dwmblocks.bg.bat:     #282828
 ! Clock
 dwmblocks.fg.clock:   #a89984
 dwmblocks.bg.clock:   #282828
-
+! Caps-Lock
+dwmblocks.fg.caps:     #282828
+dwmblocks.bg.caps:     #cc241d
+!
 ! =========================================
 ! TMUX
 ! =========================================

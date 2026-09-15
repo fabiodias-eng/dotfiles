@@ -11,6 +11,7 @@ eval "$(xrdb -query | awk '
 }')"
 
 for v in \
+    FG_CAPS BG_CAPS \
     FG_CPU BG_CPU \
     FG_GPU BG_GPU \
     FG_MEM BG_MEM \
@@ -29,6 +30,8 @@ render_template() {
     out="$2"
 
     sed \
+        -e "s|@FG_CAPS@|$FG_CAPS|g" \
+        -e "s|@BG_CAPS@|$BG_CAPS|g" \
         -e "s|@FG_CPU@|$FG_CPU|g" \
         -e "s|@BG_CPU@|$BG_CPU|g" \
         -e "s|@FG_GPU@|$FG_GPU|g" \
@@ -48,6 +51,7 @@ render_template() {
 
 statusbar_path="$HOME/linux-env/dwmblocks/statusbar"
 
+render_template "$statusbar_path/sb-caps.template" "$statusbar_path/sb-caps"
 render_template "$statusbar_path/sb-cpu.template" "$statusbar_path/sb-cpu"
 render_template "$statusbar_path/sb-gpu.template" "$statusbar_path/sb-gpu"
 render_template "$statusbar_path/sb-mem.template" "$statusbar_path/sb-mem"
@@ -56,6 +60,7 @@ render_template "$statusbar_path/sb-bat.template" "$statusbar_path/sb-bat"
 render_template "$statusbar_path/sb-clock.template" "$statusbar_path/sb-clock"
 render_template "$statusbar_path/sb-wtr.template" "$statusbar_path/sb-wtr"
 
+chmod +x "$statusbar_path/sb-caps"
 chmod +x "$statusbar_path/sb-cpu"
 chmod +x "$statusbar_path/sb-gpu"
 chmod +x "$statusbar_path/sb-mem"
@@ -63,4 +68,3 @@ chmod +x "$statusbar_path/sb-disk"
 chmod +x "$statusbar_path/sb-bat"
 chmod +x "$statusbar_path/sb-wtr"
 chmod +x "$statusbar_path/sb-clock"
-
