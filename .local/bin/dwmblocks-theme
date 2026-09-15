@@ -17,8 +17,7 @@ for v in \
     FG_DISK BG_DISK \
     FG_BAT BG_BAT \
     FG_CLOCK BG_CLOCK \
-    FG_WTR BG_WTR
-do
+    FG_WTR BG_WTR; do
     eval "test -n \"\$$v\"" || {
         echo "Missing dwmblocks variable: $v"
         exit 1
@@ -44,16 +43,16 @@ render_template() {
         -e "s|@BG_CLOCK@|$BG_CLOCK|g" \
         -e "s|@FG_WTR@|$FG_WTR|g" \
         -e "s|@BG_WTR@|$BG_WTR|g" \
-        "$in" > "$out"
+        "$in" >"$out"
 }
 
-statusbar_path="$HOME/.dwmblocks/statusbar"
+statusbar_path="$HOME/linux-env/dwmblocks/statusbar"
 
-render_template "$statusbar_path/sb-cpu.template"   "$statusbar_path/sb-cpu"
-render_template "$statusbar_path/sb-gpu.template"   "$statusbar_path/sb-gpu"
-render_template "$statusbar_path/sb-mem.template"   "$statusbar_path/sb-mem"
-render_template "$statusbar_path/sb-disk.template"  "$statusbar_path/sb-disk"
-render_template "$statusbar_path/sb-bat.template"   "$statusbar_path/sb-bat"
+render_template "$statusbar_path/sb-cpu.template" "$statusbar_path/sb-cpu"
+render_template "$statusbar_path/sb-gpu.template" "$statusbar_path/sb-gpu"
+render_template "$statusbar_path/sb-mem.template" "$statusbar_path/sb-mem"
+render_template "$statusbar_path/sb-disk.template" "$statusbar_path/sb-disk"
+render_template "$statusbar_path/sb-bat.template" "$statusbar_path/sb-bat"
 render_template "$statusbar_path/sb-clock.template" "$statusbar_path/sb-clock"
 render_template "$statusbar_path/sb-wtr.template" "$statusbar_path/sb-wtr"
 
@@ -64,3 +63,4 @@ chmod +x "$statusbar_path/sb-disk"
 chmod +x "$statusbar_path/sb-bat"
 chmod +x "$statusbar_path/sb-wtr"
 chmod +x "$statusbar_path/sb-clock"
+
