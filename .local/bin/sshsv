@@ -1,0 +1,26 @@
+#!/bin/bash
+ssh_server_is_running=$(pgrep -a sshd)
+if [[ -z "$ssh_server_is_running" ]]; then
+    echo "SSHD daemon is running..."
+    echo
+    sudo systemctl unmask ssh.socket >/dev/null 2>&1
+    sudo systemctl unmask ssh.service >/dev/null 2>&1
+    sudo systemctl enable ssh.socket >/dev/null 2>&1
+    sudo systemctl enable ssh.service >/dev/null 2>&1
+    sudo systemctl start ssh.socket >/dev/null 2>&1
+    sudo systemctl start ssh.service >/dev/null 2>&1
+    sudo systemctl status ssh >/dev/null 2>&1
+    sshd >/dev/null 2>&1
+    sudo systemctl status ssh
+else
+    echo "Stopping SSHD daemon..."
+    echo
+    sudo systemctl stop ssh.socket >/dev/null 2>&1
+    sudo systemctl stop ssh.service >/dev/null 2>&1
+    sudo systemctl disable ssh.socket >/dev/null 2>&1
+    sudo systemctl disable ssh.service >/dev/null 2>&1
+    sudo systemctl mask ssh.socket >/dev/null 2>&1
+    sudo systemctl mask ssh.service >/dev/null 2>&1
+    sudo pkill sshd >/dev/null 2>&1
+    sudo systemctl status ssh
+fi
